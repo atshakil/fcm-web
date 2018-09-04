@@ -1,0 +1,23 @@
+// Handles background notifications
+// Service worker supports ONLY FCM service (not other services)
+
+importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js');
+
+var config = {
+  messagingSenderId: ""
+};
+firebase.initializeApp(config);
+
+const messaging = firebase.messaging();
+
+// WARNING: `click_action` only supports HTTPS urls
+// RECOMMENDATION: Add `notification` payload to all data message (Reason: data message don't support `click_action`)
+  // `click_action` usage: Points to a link, often an internal app page link, so, the app is brought to foreground
+
+// Background notifications are handled automatically, but it can be further
+// customized, or handled manually, using `setBackgroundMessageHandler`
+// messaging.setBackgroundMessageHandler(payload => {
+//   // customize notification
+//   return self.registration.showNotification(title, options);
+// });
