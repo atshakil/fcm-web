@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+require "jwt"
+require "json"
+
+raise "A valid path to the service account private key file must be provided" if ARGV.length < 1 && ARGV[0].class != String
+
+File.open(ARGV[0]) do |f|
+  content = JSON.parse f.read
+  $service_account_email = content["client_email"]
+  $private_key = OpenSSL::PKey::RSA.new content["private_key"]
+end
+
+def create_custom_token(uid="1", is_premium_account=false)
+  iat = Time.now.to_i
+  exp = iat+(60*60) # Maximum expiration time is one hour
+  payload = {:iss => $service_account_email,
+             :sub => $service_account_email,
+             :aud => "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
+             :iat => iat,
+             :exp => exp,
+             :uid => uid,
+             :claims => {:premium_account => is_premium_account}}
+
+  token = JWT.encode payload, $private_key, "RS256"
+  {
+    iat: iat,
+    exp: exp,
+    uid: uid,
+    token: token
+  }
+end
+
+
+token_container = create_custom_token
+puts """
+#######################################
+Token Generated.
+#######################################
+UID: #{token_container[:uid]}
+Validity: #{Time.at token_container[:iat]} to #{Time.at token_container[:exp]}
+#######################################
+Token:
+
+#{token_container[:token]}
+
+#######################################
+"""
