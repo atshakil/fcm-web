@@ -30,7 +30,6 @@ def create_custom_token(uid="1", is_premium_account=false)
   }
 end
 
-
 token_container = create_custom_token
 puts """
 #######################################

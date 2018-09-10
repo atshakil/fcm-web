@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+require "googleauth"
+
+raise "A valid path to the service account private key file must be provided" if ARGV.length < 1 && ARGV[0].class != String
+
+# Full access
+# scope = 'https://www.googleapis.com/auth/androidpublisher'
+# DB access
+scope = [
+  'https://www.googleapis.com/auth/userinfo.email',
+  'https://www.googleapis.com/auth/firebase.database'
+]
+
+key_path = ARGV[0]
+
+authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
+  json_key_io: File.open(key_path),
+  scope: scope)
+  
+authorizer.fetch_access_token!
+
+puts """
+Access Token:
+
+#{authorizer.access_token}
+
+"""
