@@ -2,7 +2,32 @@
 
 [FCM](https://firebase.google.com/docs/cloud-messaging/) web application demonstration using [CRA](https://github.com/facebook/create-react-app).
 
-## Usage
+## Usage: Web App
+
+### Installation
+
+1. `cp public/firebase-messaging-sw.js.example public/firebase-messaging-sw.js`
+2. Get **Sender ID** from, *Firebase console > Project settings > Cloud messaging*, and set in `public/firebase-messaging-sw.js`.
+    ```js
+    var config = {
+      messagingSenderId: "xxxxxxxxxxx"
+    };
+    ```
+3. `cp src/config.js.example src/config.js`
+4. From *Firebase console > Project settings > General > Your apps > Add Firebase to your web app*, copy the credentials to `src/config.js`
+5. `cp .env.local.example .env.local`
+6. From *Firebase console > Project settings > Cloud messaging > Web configuration*, generate a key pair, if no pair exists, else copy the public key of the existing key pair. Now, paste the value in `.env.local`.
+7. `yarn install`
+
+### Usage
+
+Run the development server using,
+
+```sh
+yarn start
+```
+
+## Usage: Independent Modules
 
 ### Generating JWT for an User
 
