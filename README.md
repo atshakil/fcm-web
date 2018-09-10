@@ -19,6 +19,21 @@
 6. From *Firebase console > Project settings > Cloud messaging > Web configuration*, generate a key pair, if no pair exists, else copy the public key of the existing key pair. Now, paste the value in `.env.local`.
 7. `yarn install`
 
+### Configuration
+
+#### Realtime Database Rules
+
+For a selected project, from *Firebase console > Database > Realtime Database > Rules*, set,
+
+```json
+{
+  "rules": {
+    ".read": "auth !== null",
+    ".write": "auth !== null"
+  }
+}
+```
+
 ### Usage
 
 Run the development server using,
