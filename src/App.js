@@ -33,14 +33,17 @@ class App extends Component {
     window.messages = window.database.ref('messages');
     this.authenticateFirebase();
     this.enableFCM();
-    this.enableRTDB();
   }
 
   authenticateFirebase() {
     window.auth.onAuthStateChanged(user => {
       this.setState({ isLoggedIn: !!user })
       console.log(user ? 'User is now logged in' : 'User is now logged out');
-
+      if(user) {
+        this.enableRTDB();
+      } else {
+        this.setState({ messages: [] });
+      }
     });
   }
 
