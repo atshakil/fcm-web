@@ -130,3 +130,8 @@ When firebase SDK is setup in the client, client may want to test FCM service. T
 ```sh
 curl -X POST -H "Authorization: key=REPLACE_WITH_AUTH_KEY" -H "Content-Type: application/json" -d '{ "to": "REPLACE_WITH_DEVICE_REG_TOKEN", "notification": { "title": "Demo title", "body": "Demo body" } }' https://fcm.googleapis.com/fcm/send
 ```
+
+## TODO
+
+- Provide a method to verify and decode JWT
+- Provide a standalone method to verify ID_TOKEN using Ruby
